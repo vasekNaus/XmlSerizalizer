@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{32057797-09F9-4BA0-905C-077B3F4CF9D6}</ProjectGuid>
+    <ProjectGuid>{7188F697-F6E2-4CB6-995B-0950EC7B3B36}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Apollo.EyeErp.Legacy</RootNamespace>
-    <AssemblyName>Apollo.EyeErp.Legacy</AssemblyName>
+    <RootNamespace>WindowsFormsApp1</RootNamespace>
+    <AssemblyName>WindowsFormsApp1</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

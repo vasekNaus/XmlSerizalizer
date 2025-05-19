@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Apollo.EyeErp.Legacy
+namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
@@ -19,7 +19,8 @@ namespace Apollo.EyeErp.Legacy
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Shared.Class1.GetGreeting("World");
+            Apollo.EyeErp.Shared.Class1 c = new Apollo.EyeErp.Shared.Class1();
+            c.Test = "Hello World!";
         }
     }
 }

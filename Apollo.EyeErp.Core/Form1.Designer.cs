@@ -28,11 +28,31 @@ partial class Form1
     /// </summary>
     private void InitializeComponent()
     {
-        this.components = new System.ComponentModel.Container();
-        this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        this.ClientSize = new System.Drawing.Size(800, 450);
-        this.Text = "Form1";
+        btnSerialize = new Button();
+        SuspendLayout();
+        // 
+        // btnSerialize
+        // 
+        btnSerialize.Location = new Point(527, 117);
+        btnSerialize.Name = "btnSerialize";
+        btnSerialize.Size = new Size(112, 34);
+        btnSerialize.TabIndex = 0;
+        btnSerialize.Text = "Serializovat";
+        btnSerialize.UseVisualStyleBackColor = true;
+        btnSerialize.Click += btnSerialize_Click;
+        // 
+        // Form1
+        // 
+        AutoScaleDimensions = new SizeF(10F, 25F);
+        AutoScaleMode = AutoScaleMode.Font;
+        ClientSize = new Size(800, 450);
+        Controls.Add(btnSerialize);
+        Name = "Form1";
+        Text = "Form1";
+        ResumeLayout(false);
     }
 
     #endregion
+
+    private Button btnSerialize;
 }
