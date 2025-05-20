@@ -6,7 +6,7 @@ namespace Apollo.EyeErp.Shared
 {
     [Serializable]
     [XmlRoot("Task")]
-    [XmlInclude(typeof(TaskEntrence))]
+   
     public class Task
     {
         [XmlElement("Id")]
