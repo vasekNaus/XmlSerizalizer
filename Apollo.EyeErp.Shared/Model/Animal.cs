@@ -1,16 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Xml.Serialization;
 
-namespace Apollo.EyeErp.Shared.Model
+namespace Apollo.EyeErp.Shared
 {
-    internal class Animal
+    [Serializable]
+    [XmlRoot("Animal")]
+    public class Animal
     {
-        public int Id { get; set; }
+        public Animal() { 
+        }
+
+        [XmlElement("Name")]
         public string Name { get; set; }
+
+        [XmlElement("Age")]
+        public int Age { get; set; }
+
+        [XmlElement("Species")]
         public string Species { get; set; }
-        public string Breed { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        
     }
 }
