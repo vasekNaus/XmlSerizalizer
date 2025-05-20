@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Apollo.EyeErp.Shared.Model;
+using System;
 using System.Xml.Serialization;
 
 namespace Apollo.EyeErp.Shared
 {
     [Serializable]
     [XmlRoot("Task")]
+    [XmlInclude(typeof(TaskEntrence))]
     public class Task
     {
-
-
         [XmlElement("Id")]
         public int Id { get; set; }
 

@@ -1,16 +1,13 @@
-namespace Apollo.EyeErp.Core;
+using System;
+using Apollo.EyeErp.Shared;
 
-static class Program
+namespace Apollo.EyeErp.Core
 {
-    /// <summary>
-    ///  The main entry point for the application.
-    /// </summary>
-    [STAThread]
-    static void Main()
+    class Program
     {
-        // To customize application configuration such as set high DPI settings or default font,
-        // see https://aka.ms/applicationconfiguration.
-        ApplicationConfiguration.Initialize();
-        Application.Run(new Form1());
-    }    
+        static void Main(string[] args)
+        {
+            
+        }
+    }
 }

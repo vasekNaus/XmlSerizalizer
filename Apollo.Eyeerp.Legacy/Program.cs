@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using Apollo.EyeErp.Shared;
 
+using System.Windows.Forms;
 namespace Apollo.EyeErp.Legacy
 {
-    internal static class Program
+   
+    class Program
     {
-        /// <summary>
-        /// Hlavní vstupní bod aplikace.
-        /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

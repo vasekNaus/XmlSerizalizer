@@ -5,7 +5,9 @@ using System.Xml.Serialization;
 
 namespace Apollo.EyeErp.Shared.Model
 {
-    internal class TaskEntrence : Task
+    [Serializable]
+    [XmlRoot("Task")]
+    public class TaskEntrence : Task
     {
         [XmlElement("Id")]
         public int Id { get; set; }

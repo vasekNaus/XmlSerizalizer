@@ -33,7 +33,7 @@ partial class Form1
         // 
         // btnSerialize
         // 
-        btnSerialize.Location = new Point(527, 117);
+        btnSerialize.Location = new Point(557, 159);
         btnSerialize.Name = "btnSerialize";
         btnSerialize.Size = new Size(112, 34);
         btnSerialize.TabIndex = 0;
