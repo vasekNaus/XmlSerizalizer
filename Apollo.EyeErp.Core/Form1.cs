@@ -1,4 +1,6 @@
+using Apollo.EyeErp.Shared;
 using System;
+using System.Windows.Forms;
 
 namespace Apollo.EyeErp.Core;
 
@@ -7,12 +9,22 @@ public partial class Form1 : Form
     public Form1()
     {
         InitializeComponent();
+       
     }
 
-    private void btnSerialize_Click(object sender, EventArgs e)
+    private void button1_Click_1(object sender, EventArgs e)
     {
-        var c = new Apollo.EyeErp.Shared.Class1();
-        c.Test = "Hello World!";    
-        Apollo.EyeErp.Shared.Class1.GetGreeting("World");
+       
+    }
+
+
+    private void Form1_Load(object sender, EventArgs e)
+    {
+       
+    }
+
+    private void label1_Click(object sender, EventArgs e)
+    {
+
     }
 }
