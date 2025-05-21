@@ -57,16 +57,32 @@ namespace Apollo.EyeErp.Shared.Utilities
 
         public static Task DeserializeFromXml(string filePath)
         {
-            if (!File.Exists(filePath))
-                throw new FileNotFoundException("XML file not found", filePath);
-
-            
-            var type = DetermineTypeFromXmlFile(filePath);
-            var serializer = new XmlSerializer(type, GetExtraTypes());
-
-            using (var reader = new StreamReader(filePath))
+            try
             {
-                return (Task)serializer.Deserialize(reader);
+                if (!File.Exists(filePath))
+                    throw new FileNotFoundException("XML file not found", filePath);
+
+                // First read the XML to inspect it
+                string xmlContent = File.ReadAllText(filePath);
+                Console.WriteLine("XML Content:");
+                Console.WriteLine(xmlContent);
+
+                var type = DetermineTypeFromXmlFile(filePath);
+                Console.WriteLine($"Determined type: {type.Name}");
+
+                var serializer = new XmlSerializer(type, GetExtraTypes());
+
+                using (var reader = new StreamReader(filePath))
+                {
+                    var result = (Task)serializer.Deserialize(reader);
+                    Console.WriteLine("Deserialization successful");
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Deserialization failed: {ex.ToString()}");
+                throw; // Re-throw after logging
             }
         }
 

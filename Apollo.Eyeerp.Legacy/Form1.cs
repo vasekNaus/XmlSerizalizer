@@ -58,17 +58,18 @@ namespace Apollo.EyeErp.Legacy
             // 
             this.textBox1.Location = new System.Drawing.Point(12, 84);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(685, 20);
+            this.textBox1.Size = new System.Drawing.Size(685, 26);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = "C:\\Users\\Marek\\source\\repos\\Apollo.EyeErp.sln\\Apollo.Eyeerp.Legacy\\bin\\Debug\\Task" +
     " - 753023.xml";
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged_1);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 52);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(186, 13);
+            this.label1.Size = new System.Drawing.Size(274, 20);
             this.label1.TabIndex = 2;
             this.label1.Text = "Zadej cestu k souboru k deserializace";
             this.label1.Click += new System.EventHandler(this.label1_Click_1);
@@ -111,6 +112,11 @@ namespace Apollo.EyeErp.Legacy
 
   
         private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged_1(object sender, EventArgs e)
         {
 
         }

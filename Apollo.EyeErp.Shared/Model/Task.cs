@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Apollo.EyeErp.Shared.Model
 {
     [Serializable]
-    [XmlRoot("Task")]
+    [XmlRoot("Task", Namespace = "")]
     [XmlInclude(typeof(TaskEntrance))]
     public class Task
     {
