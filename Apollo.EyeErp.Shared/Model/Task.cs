@@ -9,6 +9,8 @@ namespace Apollo.EyeErp.Shared.Model
     [XmlInclude(typeof(TaskEntrance))]
     public class Task
     {
+        public Task() { }
+
         [XmlElement("Id")]
         public int Id { get; set; }
 

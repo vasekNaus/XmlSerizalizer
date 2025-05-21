@@ -7,7 +7,8 @@ namespace Apollo.EyeErp.Shared.Model
 {
     [Serializable]
     [XmlRoot("Task")]
-    
+    [XmlType("TaskEntrance")]
+
     public class TaskEntrance : Task
     {
         [XmlElement("Task_id")]
