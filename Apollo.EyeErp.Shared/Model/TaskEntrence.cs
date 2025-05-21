@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xml.Serialization;
 
 namespace Apollo.EyeErp.Shared.Model
@@ -8,79 +6,85 @@ namespace Apollo.EyeErp.Shared.Model
     [Serializable]
     [XmlRoot("Task")]
     [XmlType("TaskEntrance")]
-
     public class TaskEntrance : Task
     {
         [XmlElement("Task_id")]
-        public int Task_id { get; set; }
+        public int Task_id { get; set; }  
 
         [XmlElement("User_Reception_id")]
-        public int User_Reception_id { get; set; }
+        public int? User_Reception_id { get; set; }  
 
         [XmlElement("User_Nurse_id")]
-        public int User_Nurse_id { get; set; }
+        public int? User_Nurse_id { get; set; }  
 
         [XmlElement("User_Optometric_id")]
-        public int User_Optometric_id { get; set; }
+        public int? User_Optometric_id { get; set; } 
 
         [XmlElement("User_Indicate_id")]
-        public int User_Indicate_id { get; set; }
+        public int? User_Indicate_id { get; set; }  
 
         [XmlElement("TaskConclusion_id")]
-        public int TaskConclusion_id { get; set; }
+        public short? TaskConclusion_id { get; set; } 
 
         [XmlElement("Conclusion")]
-        public string Conclusion { get; set; }
+        public string Conclusion { get; set; } 
 
-        [XmlElement("JobRecommended_id")]
-        public int JobRecommended_id { get; set; }
+        [XmlElement("JobRecomended_id")] 
+        public int? JobRecomended_id { get; set; }  
 
         [XmlElement("ExternalDoctor_id")]
-        public int ExternalDoctor_id { get; set; }
+        public int? ExternalDoctor_id { get; set; } 
 
-        [XmlElement("ExternalActivityRecommended_id")]
-        public int ExternalActivityRecommended_id { get; set; }
+        [XmlElement("ExternalActivityRecomended_id")]  
+        public int? ExternalActivityRecomended_id { get; set; }  
 
         [XmlElement("IsExternalBonus")]
-        public bool IsExternalBonus { get; set; }
+        public bool IsExternalBonus { get; set; }  
 
         [XmlElement("TaskConclusionReason_id")]
-        public int TaskConclusionReason_id { get; set; }
+        public int? TaskConclusionReason_id { get; set; }  
 
         [XmlElement("TaskConclusionL_id")]
-        public int TaskConclusionL_id { get; set; }
+        public short? TaskConclusionL_id { get; set; }  
 
         [XmlElement("TaskConclusionP_id")]
-        public int TaskConclusionP_id { get; set; }
+        public short? TaskConclusionP_id { get; set; } 
 
         [XmlElement("TaskConclusionReasonL_id")]
-        public int TaskConclusionReasonL_id { get; set; }
+        public int? TaskConclusionReasonL_id { get; set; }  
 
         [XmlElement("TaskConclusionReasonP_id")]
-        public int TaskConclusionReasonP_id { get; set; }
+        public int? TaskConclusionReasonP_id { get; set; }
 
-        [XmlElement("JobRecommendedP_id")]
-        public int JobRecommendedP_id { get; set; }
+        [XmlElement("JobRecomendedP_id")] 
+        public int? JobRecomendedP_id { get; set; }  
 
-        [XmlElement("JobRecommendedL_id")]
-        public int JobRecommendedL_id { get; set; }
+        [XmlElement("JobRecomendedL_id")]  
+        public int? JobRecomendedL_id { get; set; } 
 
         [XmlElement("InclusionReasonL_id")]
-        public int InclusionReasonL_id { get; set; }
+        public int? InclusionReasonL_id { get; set; }  
 
         [XmlElement("InclusionReasonP_id")]
-        public int InclusionReasonP_id { get; set; }
+        public int? InclusionReasonP_id { get; set; }
 
         [XmlElement("InclusionNoteL")]
-        public string InclusionNoteL { get; set; }
+        public string InclusionNoteL { get; set; } 
 
         [XmlElement("InclusionNoteP")]
-        public string InclusionNoteP { get; set; }
+        public string InclusionNoteP { get; set; } 
 
         [XmlElement("InclusionInMonthsL")]
-        public int InclusionInMonthsL { get; set; }
+        public int? InclusionInMonthsL { get; set; }  
 
         [XmlElement("InclusionInMonthsP")]
-        public int InclusionInMonthsP { get; set; }
+        public int? InclusionInMonthsP { get; set; }  
+
+       
+        public TaskEntrance()
+        {
+            
+            IsExternalBonus = false; 
+        }
     }
 }
