@@ -1,4 +1,4 @@
-﻿using Apollo.EyeErp.Shared;
+﻿using Apollo.EyeErp.Shared.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,7 +24,7 @@ namespace Apollo.EyeErp.Legacy
 
         private void btnSerializace_Click(object sender, EventArgs e)
         {
-            Shared.Class1.GetGreeting("World");
+            
         }
 
         private void label1_Click(object sender, EventArgs e)

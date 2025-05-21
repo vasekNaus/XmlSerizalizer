@@ -7,49 +7,79 @@ namespace Apollo.EyeErp.Shared.Model
 {
     [Serializable]
     [XmlRoot("Task")]
-    public class TaskEntrence : Task
+    
+    public class TaskEntrance : Task
     {
-        [XmlElement("Id")]
-        public int Id { get; set; }
+        [XmlElement("Task_id")]
+        public int Task_id { get; set; }
 
-        [XmlElement("Job_id")]
-        public int? Job_id { get; set; }
+        [XmlElement("User_Reception_id")]
+        public int User_Reception_id { get; set; }
 
-        [XmlElement("Patient_id")]
-        public int? Patient_id { get; set; }
+        [XmlElement("User_Nurse_id")]
+        public int User_Nurse_id { get; set; }
 
-        [XmlElement("Note")]
-        public string Note { get; set; }
+        [XmlElement("User_Optometric_id")]
+        public int User_Optometric_id { get; set; }
 
-        [XmlElement("Price")]
-        public decimal Price { get; set; }
+        [XmlElement("User_Indicate_id")]
+        public int User_Indicate_id { get; set; }
 
-        [XmlElement("PriceFull")]
-        public decimal PriceFull { get; set; }
-
-        [XmlElement("InsertData")]
-        public DateTime InsertDate { get; set; }
-
-        [XmlElement("IsActive")]
-        public bool IsActive { get; set; }
-
-        [XmlElement("IsExternalBonus")]
-        public bool IsExternalBonus { get; set; }
-
-        [XmlElement("ExternalDoctor_id")]
-        public int? ExternalDoctor_id { get; set; }
-
-        [XmlElement("JobRecomended_id")]
-        public int? JobRecomended_id { get; set; }
+        [XmlElement("TaskConclusion_id")]
+        public int TaskConclusion_id { get; set; }
 
         [XmlElement("Conclusion")]
         public string Conclusion { get; set; }
 
-        [XmlElement("TaskConclusion_id")]
-        public int? TaskConclusion_id { get; set; }
+        [XmlElement("JobRecommended_id")]
+        public int JobRecommended_id { get; set; }
+
+        [XmlElement("ExternalDoctor_id")]
+        public int ExternalDoctor_id { get; set; }
+
+        [XmlElement("ExternalActivityRecommended_id")]
+        public int ExternalActivityRecommended_id { get; set; }
+
+        [XmlElement("IsExternalBonus")]
+        public bool IsExternalBonus { get; set; }
 
         [XmlElement("TaskConclusionReason_id")]
-        public int? TaskConclusionReason_id { get; set; }
+        public int TaskConclusionReason_id { get; set; }
 
+        [XmlElement("TaskConclusionL_id")]
+        public int TaskConclusionL_id { get; set; }
+
+        [XmlElement("TaskConclusionP_id")]
+        public int TaskConclusionP_id { get; set; }
+
+        [XmlElement("TaskConclusionReasonL_id")]
+        public int TaskConclusionReasonL_id { get; set; }
+
+        [XmlElement("TaskConclusionReasonP_id")]
+        public int TaskConclusionReasonP_id { get; set; }
+
+        [XmlElement("JobRecommendedP_id")]
+        public int JobRecommendedP_id { get; set; }
+
+        [XmlElement("JobRecommendedL_id")]
+        public int JobRecommendedL_id { get; set; }
+
+        [XmlElement("InclusionReasonL_id")]
+        public int InclusionReasonL_id { get; set; }
+
+        [XmlElement("InclusionReasonP_id")]
+        public int InclusionReasonP_id { get; set; }
+
+        [XmlElement("InclusionNoteL")]
+        public string InclusionNoteL { get; set; }
+
+        [XmlElement("InclusionNoteP")]
+        public string InclusionNoteP { get; set; }
+
+        [XmlElement("InclusionInMonthsL")]
+        public int InclusionInMonthsL { get; set; }
+
+        [XmlElement("InclusionInMonthsP")]
+        public int InclusionInMonthsP { get; set; }
     }
 }
