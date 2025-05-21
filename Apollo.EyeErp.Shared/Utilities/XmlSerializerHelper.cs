@@ -1,5 +1,6 @@
 using Apollo.EyeErp.Shared.Model;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -12,6 +13,7 @@ namespace Apollo.EyeErp.Shared.Utilities
         public static void SerializeToXml(string filePath, Task data)
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
+
             if (string.IsNullOrWhiteSpace(filePath)) throw new ArgumentException("Cesta k souboru nemuze byt prazdna", nameof(filePath));
 
             string xmlContent = SerializeToXmlString(data);
@@ -19,10 +21,31 @@ namespace Apollo.EyeErp.Shared.Utilities
             File.WriteAllText(filePath, xmlContent, Encoding.UTF8);
         }
 
+
+        private static XmlSerializer CreateSerializerWithOverrides(Type type)
+        {
+            if (type == typeof(TaskEntrance))
+            {
+                var overrides = new XmlAttributeOverrides();
+                var attrs = new XmlAttributes();
+                attrs.XmlElements.Add(new XmlElementAttribute("PriceFull"));
+
+                overrides.Add(typeof(Task), nameof(Task.PricePaid), attrs);
+               
+                return new XmlSerializer(type, overrides, GetExtraTypes(), null, null);
+            }
+            else
+            {
+                return new XmlSerializer(type, GetExtraTypes());
+            }
+        }
+
+
+
         public static string SerializeToXmlString(Task data)
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
-            var serializer = new XmlSerializer(typeof(Task), GetExtraTypes());
+            var serializer = CreateSerializerWithOverrides(data.GetType());
             var settings = new XmlWriterSettings
             {
                 OmitXmlDeclaration = true,
@@ -55,7 +78,7 @@ namespace Apollo.EyeErp.Shared.Utilities
                 var type = DetermineTypeFromXmlFile(filePath);
                 Console.WriteLine($"Determined type: {type.Name}");
 
-                var serializer = new XmlSerializer(type, GetExtraTypes());
+                var serializer = CreateSerializerWithOverrides(type);
 
                 using (var reader = new StreamReader(filePath))
                 {
@@ -77,7 +100,7 @@ namespace Apollo.EyeErp.Shared.Utilities
                 throw new ArgumentException("XML string cannot be empty", nameof(xml));
 
             var type = DetermineTypeFromXmlString(xml);
-            var serializer = new XmlSerializer(type, GetExtraTypes());
+            var serializer = CreateSerializerWithOverrides(type);
 
             using (var reader = new StringReader(xml))
             {
@@ -94,6 +117,7 @@ namespace Apollo.EyeErp.Shared.Utilities
                 typeof(TaskInstrument)
             };
         }
+
 
         private static Type DetermineTypeFromXmlFile(string filePath)
         {

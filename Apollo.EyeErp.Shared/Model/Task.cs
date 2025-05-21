@@ -64,6 +64,9 @@ namespace Apollo.EyeErp.Shared.Model
         [XmlElement("PricePaid")]
         public decimal PricePaid { get; set; }
 
+        [XmlIgnore]
+        public bool PricePaidSpecified { get; set; }
+
         [XmlElement("Reason")]
         public string Reason { get; set; }
 
@@ -75,6 +78,9 @@ namespace Apollo.EyeErp.Shared.Model
 
         [XmlElement("QueuePhaseDate")]
         public DateTime QueuePhaseDate { get; set; }
+
+        [XmlIgnore]
+        public bool QueuePhaseDateSpecified { get; set; }
 
         [XmlElement("IsRearranged")]
         public bool IsRearranged { get; set; }
@@ -93,5 +99,10 @@ namespace Apollo.EyeErp.Shared.Model
 
         [XmlElement("ProFormaInvoice_id")]
         public int? ProFormaInvoiceId { get; set; }
+
+        [XmlIgnore]
+
+        public bool ProFormaInvoiceIdSpecified { get; set; }
+
     }
 }
