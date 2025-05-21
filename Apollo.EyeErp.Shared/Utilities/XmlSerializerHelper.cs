@@ -1,4 +1,4 @@
-﻿using Apollo.EyeErp.Shared.Model;
+using Apollo.EyeErp.Shared.Model;
 using System;
 using System.IO;
 using System.Text;
@@ -13,7 +13,7 @@ namespace Apollo.EyeErp.Shared.Utilities
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
 
-            // Use the actual runtime type for proper polymorphic serialization
+           
             var serializer = new XmlSerializer(data.GetType(), GetExtraTypes());
 
             var settings = new XmlWriterSettings
@@ -62,7 +62,7 @@ namespace Apollo.EyeErp.Shared.Utilities
                 if (!File.Exists(filePath))
                     throw new FileNotFoundException("XML file not found", filePath);
 
-                // First read the XML to inspect it
+                
                 string xmlContent = File.ReadAllText(filePath);
                 Console.WriteLine("XML Content:");
                 Console.WriteLine(xmlContent);
@@ -82,7 +82,7 @@ namespace Apollo.EyeErp.Shared.Utilities
             catch (Exception ex)
             {
                 Console.WriteLine($"Deserialization failed: {ex.ToString()}");
-                throw; // Re-throw after logging
+                throw; 
             }
         }
 
