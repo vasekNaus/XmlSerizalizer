@@ -7,6 +7,8 @@ namespace Apollo.EyeErp.Shared.Model
     [Serializable]
     [XmlRoot("Task", Namespace = "")]
     [XmlInclude(typeof(TaskEntrance))]
+    [XmlInclude(typeof(TaskOperation))]
+    [XmlInclude(typeof(TaskInstrument))]
     public class Task
     {
         public Task() { }

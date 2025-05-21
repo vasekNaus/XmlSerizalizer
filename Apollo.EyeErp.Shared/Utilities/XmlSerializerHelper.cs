@@ -12,32 +12,17 @@ namespace Apollo.EyeErp.Shared.Utilities
         public static void SerializeToXml(string filePath, Task data)
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
+            if (string.IsNullOrWhiteSpace(filePath)) throw new ArgumentException("Cesta k souboru nemuze byt prazdna", nameof(filePath));
 
-           
-            var serializer = new XmlSerializer(data.GetType(), GetExtraTypes());
+            string xmlContent = SerializeToXmlString(data);
 
-            var settings = new XmlWriterSettings
-            {
-                OmitXmlDeclaration = true,
-                Indent = true,
-                Encoding = new UTF8Encoding(false)
-            };
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            using (var writer = XmlWriter.Create(stream, settings))
-            {
-                var ns = new XmlSerializerNamespaces();
-                ns.Add("", ""); 
-                serializer.Serialize(writer, data, ns);
-            }
+            File.WriteAllText(filePath, xmlContent, Encoding.UTF8);
         }
 
-        public static string SerializeToXml(Task data)
+        public static string SerializeToXmlString(Task data)
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
-
-            var serializer = new XmlSerializer(data.GetType(), GetExtraTypes());
-
+            var serializer = new XmlSerializer(typeof(Task), GetExtraTypes());
             var settings = new XmlWriterSettings
             {
                 OmitXmlDeclaration = true,
@@ -49,7 +34,10 @@ namespace Apollo.EyeErp.Shared.Utilities
             using (var xmlWriter = XmlWriter.Create(stringWriter, settings))
             {
                 var ns = new XmlSerializerNamespaces();
-                ns.Add("", ""); 
+                ns.Add("xsd", "http://www.w3.org/2001/XMLSchema");
+                ns.Add("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+                ns.Add("", "");
+
                 serializer.Serialize(xmlWriter, data, ns);
                 return stringWriter.ToString();
             }
@@ -62,10 +50,7 @@ namespace Apollo.EyeErp.Shared.Utilities
                 if (!File.Exists(filePath))
                     throw new FileNotFoundException("XML file not found", filePath);
 
-                
                 string xmlContent = File.ReadAllText(filePath);
-                Console.WriteLine("XML Content:");
-                Console.WriteLine(xmlContent);
 
                 var type = DetermineTypeFromXmlFile(filePath);
                 Console.WriteLine($"Determined type: {type.Name}");
@@ -82,7 +67,7 @@ namespace Apollo.EyeErp.Shared.Utilities
             catch (Exception ex)
             {
                 Console.WriteLine($"Deserialization failed: {ex.ToString()}");
-                throw; 
+                throw;
             }
         }
 
@@ -91,7 +76,6 @@ namespace Apollo.EyeErp.Shared.Utilities
             if (string.IsNullOrWhiteSpace(xml))
                 throw new ArgumentException("XML string cannot be empty", nameof(xml));
 
-            
             var type = DetermineTypeFromXmlString(xml);
             var serializer = new XmlSerializer(type, GetExtraTypes());
 
@@ -103,13 +87,11 @@ namespace Apollo.EyeErp.Shared.Utilities
 
         private static Type[] GetExtraTypes()
         {
-            
             return new Type[]
             {
                 typeof(TaskEntrance),
-                //typeof(TaskOperation),
-                //typeof(TaskInstrument)
-                
+                typeof(TaskOperation),
+                typeof(TaskInstrument)
             };
         }
 
@@ -125,8 +107,8 @@ namespace Apollo.EyeErp.Shared.Utilities
                         switch (typeName)
                         {
                             case "TaskEntrance": return typeof(TaskEntrance);
-                            //case "TaskOperation": return typeof(TaskOperation);
-                            //case "TaskInstrument": return typeof(TaskInstrument);
+                            case "TaskOperation": return typeof(TaskOperation);
+                            case "TaskInstrument": return typeof(TaskInstrument);
                             default: return typeof(Task);
                         }
                     }
@@ -147,8 +129,8 @@ namespace Apollo.EyeErp.Shared.Utilities
                         switch (typeName)
                         {
                             case "TaskEntrance": return typeof(TaskEntrance);
-                            //case "TaskOperation": return typeof(TaskOperation);
-                            //case "TaskInstrument": return typeof(TaskInstrument);
+                            case "TaskOperation": return typeof(TaskOperation);
+                            case "TaskInstrument": return typeof(TaskInstrument);
                             default: return typeof(Task);
                         }
                     }
