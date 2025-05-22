@@ -21,7 +21,9 @@ namespace Apollo.EyeErp.Shared.Model
             set { }
         }
 
+        [XmlElement("PriceFull")]
 
+        public decimal PriceFull { get; set; }
 
         [XmlElement("InvoicePhase_id")]
         public int? InvoicePhaseId { get; set; }
