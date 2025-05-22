@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-using System.Xml.Serialization;
 
 namespace Apollo.EyeErp.Legacy
 {
@@ -22,6 +21,9 @@ namespace Apollo.EyeErp.Legacy
         public Form1()
         {
             InitializeComponent();
+            this.KeyPreview = true;
+            this.KeyDown += Form1_KeyDown;
+
         }
 
         private void btnSerializace_Click(object sender, EventArgs e)
@@ -45,6 +47,7 @@ namespace Apollo.EyeErp.Legacy
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
+            this.KeyPreview = true;
             // 
             // btnSerializace
             // 
@@ -103,6 +106,7 @@ namespace Apollo.EyeErp.Legacy
                 
                 if (!string.IsNullOrEmpty(idValue))
                 {
+
                     if (!string.IsNullOrEmpty(inputText))
                     {
                         string typeName = "Task";
@@ -115,7 +119,6 @@ namespace Apollo.EyeErp.Legacy
                                     typeName = xsiType;                           
                                 }                       
                         }
-
                         string name = $"{typeName}_{idValue}.xml";
 
                         var task = XmlSerializerHelper.DeserializeFromXml(inputText);
@@ -123,17 +126,15 @@ namespace Apollo.EyeErp.Legacy
                         MessageBox.Show("Deserializace proběhla", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-                else
-                {
-                    MessageBox.Show("Zadej cestu k souboru!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                else {
+                     MessageBox.Show("Zadej cestu k souboru!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch(Exception ex) {
                 MessageBox.Show("Deserializace neproběhla", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
             }
         }
-
+ 
         private void label1_Click_1(object sender, EventArgs e)
         {
 
@@ -142,6 +143,15 @@ namespace Apollo.EyeErp.Legacy
         private void textBox1_TextChanged_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnSerializace.PerformClick(); 
+            }
+            
         }
     }
 }
