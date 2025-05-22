@@ -64,6 +64,7 @@ namespace Apollo.EyeErp.Shared.Model
         [XmlElement("PricePaid")]
         public decimal PricePaid { get; set; }
 
+
         [XmlIgnore]
         public bool PricePaidSpecified { get; set; }
 
