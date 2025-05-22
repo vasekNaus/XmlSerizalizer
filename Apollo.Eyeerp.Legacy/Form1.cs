@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace Apollo.EyeErp.Legacy
 {
@@ -102,7 +103,6 @@ namespace Apollo.EyeErp.Legacy
                 
                 if (!string.IsNullOrEmpty(idValue))
                 {
-
                     if (!string.IsNullOrEmpty(inputText))
                     {
                         string typeName = "Task";
@@ -123,16 +123,17 @@ namespace Apollo.EyeErp.Legacy
                         MessageBox.Show("Deserializace proběhla", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-                else {
-                     MessageBox.Show("Zadej cestu k souboru!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                else
+                {
+                    MessageBox.Show("Zadej cestu k souboru!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-            } catch(Exception ex) { 
-                Console.WriteLine("An error", ex);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Deserializace neproběhla", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
-
-  
         private void label1_Click_1(object sender, EventArgs e)
         {
 

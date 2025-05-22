@@ -95,7 +95,10 @@ partial class Form1
 
             if (!string.IsNullOrEmpty(idValue))
             {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 10a4673dec3986174aeaaef2d0bf4c246c0d7b7f
                 if (!string.IsNullOrEmpty(inputText))
                 {
                     string typeName = "Task";
@@ -123,7 +126,7 @@ partial class Form1
         }
         catch (Exception ex)
         {
-            Console.WriteLine("An error", ex);
+            MessageBox.Show("Deserializace neproběhla", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
     }
     #endregion

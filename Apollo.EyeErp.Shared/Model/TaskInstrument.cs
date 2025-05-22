@@ -21,20 +21,20 @@ namespace Apollo.EyeErp.Shared.Model
             set { }
         }
 
-        [XmlElement("Task_id")]
-        public int Task_id { get; set; } 
+        [XmlElement("InvoicePhase_id")]
+        public int? InvoicePhaseId { get; set; }
 
         [XmlElement("User_Indicate_id")]
-        public int? User_Indicate_id { get; set; } 
+        public int? UserIndicateId { get; set; }
 
         [XmlElement("ExternalDoctor_id")]
-        public int? ExternalDoctor_id { get; set; } 
+        public int? ExternalDoctorId { get; set; }
 
         [XmlElement("Eye_id")]
-        public short? Eye_id { get; set; } 
+        public short? EyeId { get; set; }
 
         [XmlElement("JobDone_id")]
-        public int? JobDone_id { get; set; }  
+        public int? JobDoneId { get; set; }
 
         public TaskInstrument()
         {
