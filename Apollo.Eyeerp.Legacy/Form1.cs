@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace Apollo.EyeErp.Legacy
 {
@@ -92,14 +93,35 @@ namespace Apollo.EyeErp.Legacy
             try
             {
                 string inputText = this.textBox1.Text.Trim();
+
+                XmlDocument doc = new XmlDocument();
+                doc.Load(inputText);
+
+                XmlNode idNode = doc.SelectSingleNode("/Task/Id");
+                string idValue = idNode.InnerText;
                 
-                if (!string.IsNullOrEmpty(inputText))
+                if (!string.IsNullOrEmpty(idValue))
                 {
-                    string date = DateTime.Now.ToString("yyyyMMddHHmmss");
-                    string name = "Task_" + date + ".xml";
-                    Console.WriteLine(name);
-                    var task = XmlSerializerHelper.DeserializeFromXml(inputText);
-                    XmlSerializerHelper.SerializeToXml(name, task);
+
+                    if (!string.IsNullOrEmpty(inputText))
+                    {
+                        string typeName = "Task";
+                        using (var reader = System.Xml.XmlReader.Create(inputText))
+                        {
+                            if (reader.ReadToFollowing("Task"))
+                            {
+                                var xsiType = reader.GetAttribute("xsi:type");
+                                if (!string.IsNullOrEmpty(xsiType))
+                                    typeName = xsiType;                           
+                                }                       
+                        }
+
+                        string name = $"{typeName}_{idValue}.xml";
+
+                        var task = XmlSerializerHelper.DeserializeFromXml(inputText);
+                        XmlSerializerHelper.SerializeToXml(name, task);
+                        MessageBox.Show("Deserializace proběhla", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
                 else {
                      MessageBox.Show("Zadej cestu k souboru!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
