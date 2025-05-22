@@ -138,6 +138,7 @@ namespace Apollo.EyeErp.Legacy
                         var task = XmlSerializerHelper.DeserializeFromXml(inputText);
                         XmlSerializerHelper.SerializeToXml(name, task);
                         MessageBox.Show("Deserializace proběhla", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.textBox1.ResetText();
                     }
                 }
                 else {

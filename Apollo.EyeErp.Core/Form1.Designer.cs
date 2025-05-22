@@ -34,53 +34,70 @@ partial class Form1
         label1 = new Label();
         button1 = new Button();
         textBox1 = new TextBox();
+        button2 = new Button();
         SuspendLayout();
         // 
         // label1
         // 
         label1.AutoSize = true;
-        label1.Location = new Point(12, 57);
+        label1.Location = new Point(17, 95);
+        label1.Margin = new Padding(4, 0, 4, 0);
         label1.Name = "label1";
-        label1.Size = new Size(201, 15);
+       
+        label1.Size = new Size(304, 25);
         label1.TabIndex = 0;
         label1.Text = "Zadej cestu k souboru k deserializace";
         label1.Click += label1_Click;
         // 
         // button1
         // 
-        button1.Location = new Point(592, 72);
+        button1.Location = new Point(843, 184);
+        button1.Margin = new Padding(4, 5, 4, 5);
         button1.Name = "button1";
-        button1.Size = new Size(143, 49);
+        button1.Size = new Size(179, 44);
         button1.TabIndex = 1;
+        button1.Enabled = false;
         button1.Text = "Deserializace";
         button1.UseVisualStyleBackColor = true;
-       
-       
-        button1.Click += new System.EventHandler(this.button1_Click);
+        button1.Click += button1_Click;
+        // 
         // textBox1
         // 
-        textBox1.Location = new Point(12, 86);
+        textBox1.Location = new Point(17, 143);
+        textBox1.Margin = new Padding(4, 5, 4, 5);
         textBox1.Name = "textBox1";
-        textBox1.Size = new Size(550, 23);
+        textBox1.Size = new Size(1005, 31);
         textBox1.TabIndex = 2;
-        textBox1.Text = "C:\\Users\\Marek\\source\\repos\\Apollo.EyeErp.sln\\Apollo.Eyeerp.Legacy\\bin\\Debug\\Task - 753023.xml";
+        textBox1.TextChanged += textBox1_TextChanged;
+        // 
+        // button2
+        // 
+        button2.Location = new Point(656, 184);
+        button2.Margin = new Padding(4, 5, 4, 5);
+        button2.Name = "button2";
+        button2.Size = new Size(179, 44);
+        
+        button2.TabIndex = 3;
+        button2.Text = "Prozkoumat";
+        button2.UseVisualStyleBackColor = true;
+        button2.Click += button2_Click;
         // 
         // Form1
         // 
-        AutoScaleDimensions = new SizeF(7F, 15F);
+        AutoScaleDimensions = new SizeF(10F, 25F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(803, 179);
+        ClientSize = new Size(1147, 298);
+        Controls.Add(button2);
         Controls.Add(textBox1);
         Controls.Add(button1);
         Controls.Add(label1);
-        Margin = new Padding(2);
         Name = "Form1";
         Text = "Deserializace - core";
         Load += Form1_Load;
         ResumeLayout(false);
         PerformLayout();
     }
-   
+
     private void button1_Click(object sender, EventArgs e)
     {
         try
@@ -113,6 +130,7 @@ partial class Form1
                     var task = XmlSerializerHelper.DeserializeFromXml(inputText);
                     XmlSerializerHelper.SerializeToXml(name, task);
                     MessageBox.Show("Deserializace proběhla", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.textBox1.ResetText();
                 }
             }
             else
@@ -125,9 +143,33 @@ partial class Form1
             MessageBox.Show("Deserializace neproběhla", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
     }
+
+    
+    private void button2_Click(object sender, EventArgs e)
+    {
+        OpenFileDialog openFileDialog = new OpenFileDialog();
+        openFileDialog.Title = "Select a file";
+
+        if (openFileDialog.ShowDialog() == DialogResult.OK)
+        {
+            string filePath = openFileDialog.FileName;
+
+
+            string folderPath = Path.GetDirectoryName(filePath);
+
+            if (Directory.Exists(folderPath))
+            {
+                button1.Enabled = true;
+                this.textBox1.ResetText();
+                this.textBox1.AppendText(filePath);
+
+            }
+        }
+    }
     #endregion
 
     private Label label1;
     private Button button1;
     private TextBox textBox1;
+    private Button button2;
 }
