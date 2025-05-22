@@ -93,6 +93,7 @@ partial class Form1
                 Console.WriteLine(name);
                 var task = XmlSerializerHelper.DeserializeFromXml(inputText);
                 XmlSerializerHelper.SerializeToXml(name, task);
+                MessageBox.Show("Deserializace proběhla", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
@@ -101,7 +102,7 @@ partial class Form1
         }
         catch (Exception ex)
         {
-            Console.WriteLine("An error", ex);
+            MessageBox.Show("Deserializace neproběhla", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
     }
     #endregion

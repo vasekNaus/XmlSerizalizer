@@ -45,12 +45,12 @@ namespace Apollo.EyeErp.Shared.Utilities
         public static string SerializeToXmlString(Task data)
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
-            var serializer = CreateSerializerWithOverrides(data.GetType());
+            var serializer = CreateSerializerWithOverrides(typeof(Task));
             var settings = new XmlWriterSettings
             {
                 OmitXmlDeclaration = true,
                 Indent = true,
-                Encoding = new UTF8Encoding(false)
+                Encoding = new UTF8Encoding(false)  
             };
 
             using (var stringWriter = new StringWriterWithEncoding(Encoding.UTF8))

@@ -97,15 +97,17 @@ namespace Apollo.EyeErp.Legacy
                 {
                     string date = DateTime.Now.ToString("yyyyMMddHHmmss");
                     string name = "Task_" + date + ".xml";
+                    
                     Console.WriteLine(name);
                     var task = XmlSerializerHelper.DeserializeFromXml(inputText);
                     XmlSerializerHelper.SerializeToXml(name, task);
+                    MessageBox.Show("Deserializace proběhla", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else {
                      MessageBox.Show("Zadej cestu k souboru!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-            } catch(Exception ex) { 
-                Console.WriteLine("An error", ex);
+            } catch(Exception ex) {
+                MessageBox.Show("Deserializace neproběhla", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
