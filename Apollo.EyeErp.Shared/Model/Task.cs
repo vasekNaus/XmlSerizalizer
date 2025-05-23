@@ -1,5 +1,6 @@
 ﻿using Apollo.EyeErp.Shared.Model;
 using System;
+using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 namespace Apollo.EyeErp.Shared.Model
@@ -9,6 +10,9 @@ namespace Apollo.EyeErp.Shared.Model
     [XmlInclude(typeof(TaskEntrance))]
     [XmlInclude(typeof(TaskOperation))]
     [XmlInclude(typeof(TaskInstrument))]
+    [KnownType(typeof(TaskEntrance))]
+    [KnownType(typeof(TaskOperation))]
+    [KnownType(typeof(TaskInstrument))]
     public class MyTask
     {
         public MyTask() { }
