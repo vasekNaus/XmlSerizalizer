@@ -94,64 +94,12 @@ partial class Form1
         Controls.Add(label1);
         Name = "Form1";
         Text = "Deserializace - core";
-        Load += Form1_Load;
+     
         ResumeLayout(false);
         PerformLayout();
     }
 
-    private void button1_Click(object sender, EventArgs e)
-    {
-        try
-        {
-            string inputPath = this.textBox1.Text.Trim();
-
-            if (!File.Exists(inputPath))
-            {
-                MessageBox.Show("Slozka nebyla nalezena", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            var task = XmlSerializerHelper.DeserializeFromXml<MyTask>(inputPath);
-
-            string typeName = task.GetType().Name;
-            string idValue = task.Id.ToString();
-
-            string outputFileName = $"{typeName}_{idValue}.xml";
-
-            XmlSerializerHelper.SerializeToXml(outputFileName, task);
-
-            MessageBox.Show("Deserializace probehla!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            this.textBox1.ResetText();
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show("Chyba: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-    }
-
     
-    private void button2_Click(object sender, EventArgs e)
-    {
-        OpenFileDialog openFileDialog = new OpenFileDialog();
-        openFileDialog.Title = "Select a file";
-
-        if (openFileDialog.ShowDialog() == DialogResult.OK)
-        {
-            string filePath = openFileDialog.FileName;
-
-
-            string folderPath = Path.GetDirectoryName(filePath);
-
-            if (Directory.Exists(folderPath))
-            {
-                button1.Enabled = true;
-                this.textBox1.ResetText();
-                this.textBox1.AppendText(filePath);
-
-            }
-        }
-    }
     #endregion
 
     private Label label1;
