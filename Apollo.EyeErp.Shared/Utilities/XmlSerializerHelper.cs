@@ -50,10 +50,7 @@ namespace Apollo.EyeErp.Shared.Utilities
         {
             try
             {
-                if (!File.Exists(filePath))
-                    throw new FileNotFoundException("XML file not found", filePath);
-
-                string xmlContent = File.ReadAllText(filePath);
+        
 
                 var type = DetermineTypeFromXmlFile(filePath);
                 Console.WriteLine($"Determined type: {type.Name}");
