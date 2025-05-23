@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 namespace Apollo.EyeErp.Shared.Model
@@ -6,7 +7,7 @@ namespace Apollo.EyeErp.Shared.Model
     [Serializable]
     [XmlRoot("Task", Namespace = "")]
     [XmlType("TaskEntrance")]
-    public class TaskEntrance : MyTask
+  public class TaskEntrance : MyTask
     {
         [XmlNamespaceDeclarations]
         public XmlSerializerNamespaces Xmlns
