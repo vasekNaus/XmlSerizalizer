@@ -1,16 +1,11 @@
-﻿using Apollo.EyeErp.Shared.Utilities;
+﻿using Apollo.EyeErp.Shared.Model;
+using Apollo.EyeErp.Shared.Utilities;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
+
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using System.Windows.Forms;
-using System.Xml;
+
 
 namespace Apollo.EyeErp.Legacy
 {
@@ -110,46 +105,34 @@ namespace Apollo.EyeErp.Legacy
         {
             try
             {
-                string inputText = this.textBox1.Text.Trim();
+                string inputPath = this.textBox1.Text.Trim();
 
-                XmlDocument doc = new XmlDocument();
-                doc.Load(inputText);
-
-                XmlNode idNode = doc.SelectSingleNode("/Task/Id");
-                string idValue = idNode.InnerText;
-
-                if (!string.IsNullOrEmpty(idValue))
+                if (!File.Exists(inputPath))
                 {
-
-                    if (!string.IsNullOrEmpty(inputText))
-                    {
-                        string typeName = "Task";
-                        using (var reader = System.Xml.XmlReader.Create(inputText))
-                        {
-                            if (reader.ReadToFollowing("Task"))
-                            {
-                                var xsiType = reader.GetAttribute("xsi:type");
-                                if (!string.IsNullOrEmpty(xsiType))
-                                    typeName = xsiType;
-                            }
-                        }
-                        string name = $"{typeName}_{idValue}.xml";
-
-                        var task = XmlSerializerHelper.DeserializeFromXml(inputText);
-                        XmlSerializerHelper.SerializeToXml(name, task);
-                        MessageBox.Show("Deserializace proběhla", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        this.textBox1.ResetText();
-                    }
+                    MessageBox.Show("Slozka nebyla nalezena", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                else {
-                     MessageBox.Show("Zadej cestu k souboru!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            } catch(Exception ex) {
-                MessageBox.Show("Deserializace neproběhla", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
+                var task = XmlSerializerHelper.DeserializeFromXml<MyTask>(inputPath);
+
+                string typeName = task.GetType().Name;
+                string idValue = task.Id.ToString();
+
+                string outputFileName = $"{typeName}_{idValue}.xml";
+
+                XmlSerializerHelper.SerializeToXml(outputFileName, task);
+
+                MessageBox.Show("Deserializace probehla!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                this.textBox1.ResetText();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Chyba: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
- 
+
+
         private void label1_Click_1(object sender, EventArgs e)
         {
 

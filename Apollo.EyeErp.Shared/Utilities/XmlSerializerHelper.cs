@@ -1,6 +1,5 @@
 using Apollo.EyeErp.Shared.Model;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -10,27 +9,29 @@ namespace Apollo.EyeErp.Shared.Utilities
 {
     public static class XmlSerializerHelper
     {
-        public static void SerializeToXml(string filePath, Task data)
+        private static readonly Type[] extraTypes = new Type[]
         {
-            if (data == null) throw new ArgumentNullException(nameof(data));
+            typeof(TaskEntrance),
+            typeof(TaskOperation),
+            typeof(TaskInstrument)
+        };
 
-            if (string.IsNullOrWhiteSpace(filePath)) throw new ArgumentException("Cesta k souboru nemuze byt prazdna", nameof(filePath));
-
+        public static void SerializeToXml<T>(string filePath, T data)
+        {
             string xmlContent = SerializeToXmlString(data);
-
             File.WriteAllText(filePath, xmlContent, Encoding.UTF8);
         }
 
-
-        public static string SerializeToXmlString(Task data)
+        public static string SerializeToXmlString<T>(T data)
         {
             if (data == null) throw new ArgumentNullException(nameof(data));
-            var serializer = new XmlSerializer(typeof(Task), GetExtraTypes());
+            var serializer = new XmlSerializer(typeof(T), extraTypes);
+
             var settings = new XmlWriterSettings
             {
                 OmitXmlDeclaration = true,
                 Indent = true,
-                Encoding = new UTF8Encoding(false)  
+                Encoding = new UTF8Encoding(false)
             };
 
             using (var stringWriter = new StringWriterWithEncoding(Encoding.UTF8))
@@ -46,109 +47,22 @@ namespace Apollo.EyeErp.Shared.Utilities
             }
         }
 
-        public static Task DeserializeFromXml(string filePath)
+        public static T DeserializeFromXml<T>(string filePath)
         {
-            try
+            if (!File.Exists(filePath))
+                throw new FileNotFoundException("XML file not found", filePath);
+
+            var serializer = new XmlSerializer(typeof(T), extraTypes);
+            using (var reader = new StreamReader(filePath))
             {
-        
-
-                var type = DetermineTypeFromXmlFile(filePath);
-                Console.WriteLine($"Determined type: {type.Name}");
-
-                var serializer = new XmlSerializer(type, GetExtraTypes());
-
-                using (var reader = new StreamReader(filePath))
-                {
-                    var result = (Task)serializer.Deserialize(reader);
-                    Console.WriteLine("Deserialization successful");
-                    return result;
-                }
+                return (T)serializer.Deserialize(reader);
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Deserialization failed: {ex.ToString()}");
-                throw;
-            }
-        }
-
-        public static Task DeserializeFromXmlString(string xml)
-        {
-            if (string.IsNullOrWhiteSpace(xml))
-                throw new ArgumentException("XML string cannot be empty", nameof(xml));
-
-            var type = DetermineTypeFromXmlString(xml);
-            var serializer = new XmlSerializer(type, GetExtraTypes());
-
-            using (var reader = new StringReader(xml))
-            {
-                return (Task)serializer.Deserialize(reader);
-            }
-        }
-
-        private static Type[] GetExtraTypes()
-        {
-            return new Type[]
-            {
-                typeof(TaskEntrance),
-                typeof(TaskOperation),
-                typeof(TaskInstrument)
-            };
-        }
-
-
-        private static Type DetermineTypeFromXmlFile(string filePath)
-        {
-            using (var reader = XmlReader.Create(filePath))
-            {
-                if (reader.ReadToFollowing("Task"))
-                {
-                    if (reader.GetAttribute("xsi:type") != null)
-                    {
-                        string typeName = reader.GetAttribute("xsi:type");
-                        switch (typeName)
-                        {
-                            case "TaskEntrance": return typeof(TaskEntrance);
-                            case "TaskOperation": return typeof(TaskOperation);
-                            case "TaskInstrument": return typeof(TaskInstrument);
-                            default: return typeof(Task);
-                        }
-                    }
-                }
-            }
-            return typeof(Task);
-        }
-
-        private static Type DetermineTypeFromXmlString(string xml)
-        {
-            using (var reader = XmlReader.Create(new StringReader(xml)))
-            {
-                if (reader.ReadToFollowing("Task"))
-                {
-                    if (reader.GetAttribute("xsi:type") != null)
-                    {
-                        string typeName = reader.GetAttribute("xsi:type");
-                        switch (typeName)
-                        {
-                            case "TaskEntrance": return typeof(TaskEntrance);
-                            case "TaskOperation": return typeof(TaskOperation);
-                            case "TaskInstrument": return typeof(TaskInstrument);
-                            default: return typeof(Task);
-                        }
-                    }
-                }
-            }
-            return typeof(Task);
         }
 
         private sealed class StringWriterWithEncoding : StringWriter
         {
             private readonly Encoding _encoding;
-
-            public StringWriterWithEncoding(Encoding encoding)
-            {
-                _encoding = encoding;
-            }
-
+            public StringWriterWithEncoding(Encoding encoding) { _encoding = encoding; }
             public override Encoding Encoding => _encoding;
         }
     }

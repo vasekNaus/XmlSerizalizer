@@ -6,7 +6,7 @@ namespace Apollo.EyeErp.Shared.Model
     [Serializable]
     [XmlRoot("Task", Namespace = "")]
     [XmlType("TaskEntrance")]
-    public class TaskEntrance : Task
+    public class TaskEntrance : MyTask
     {
         [XmlNamespaceDeclarations]
         public XmlSerializerNamespaces Xmlns
