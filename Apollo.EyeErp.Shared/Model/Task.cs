@@ -1,6 +1,7 @@
 ﻿using Apollo.EyeErp.Shared.Model;
 using System;
 using System.Runtime.Serialization;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace Apollo.EyeErp.Shared.Model
@@ -16,6 +17,38 @@ namespace Apollo.EyeErp.Shared.Model
     public class MyTask
     {
         public MyTask() { }
+
+        [XmlElement("LensId")]
+
+        public int? LensId { get; set; }
+
+        #region Nepoužívané - nejsou v databázi
+        [XmlElement("TaskLensSerialize")]
+        public string TaskLensSerialize { get; set; }
+
+        [XmlElement("MarketingEventsSerialize")]
+        public string MarketingEventsSerialize { get; set; }
+
+        [XmlElement("DiscountsSerialize")]
+        public string DiscountsSerialize { get; set; }
+
+        [XmlElement("JobOptionsSerialize")]
+        public string JobOptionsSerialize { get; set; }
+
+        [XmlElement("TimeFromSerialize")]
+        public string TimeFromSerialize { get; set; }
+
+        [XmlElement("TimeToSerialize")]
+        public string TimeToSerialize { get; set; }
+
+        [XmlElement("TimeArrivalSerialize")]
+        public string TimeArrivalSerialize { get; set; }
+
+        [XmlElement("TaskDateSerialize")]
+
+        public string TaskDateSerialize { get; set; }
+
+        #endregion
 
         [XmlElement("Id")]
         public int Id { get; set; }
@@ -72,6 +105,12 @@ namespace Apollo.EyeErp.Shared.Model
         [XmlIgnore]
         public bool PricePaidSpecified { get; set; }
 
+        [XmlElement("PriceFull")]
+        public decimal PriceFull { get; set; }
+
+        [XmlIgnore]
+        public bool PriceFullSpecified { get; set; }
+
         [XmlElement("Reason")]
         public string Reason { get; set; }
 
@@ -109,11 +148,5 @@ namespace Apollo.EyeErp.Shared.Model
 
         public bool ProFormaInvoiceIdSpecified { get; set; }
 
-    #region Nepoužívané - nejsou v databázi
-
-    
-    
-    #endregion
-
-  }
+    }
 }
