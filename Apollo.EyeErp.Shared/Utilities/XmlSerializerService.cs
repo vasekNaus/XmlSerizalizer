@@ -14,12 +14,33 @@ namespace Apollo.EyeErp.Shared.Utilities
   {
     private Dictionary<Type, XmlSerializer> serializers;
 
-    public XmlSerializerService()
-    {
-      this.serializers = new Dictionary<Type, XmlSerializer>();
-    }
+        private readonly Encoding defaultEncoding;
+        private readonly XmlWriterSettings defaultWriterSettings;
+        private readonly XmlSerializerNamespaces defaultNamespaces;
 
-    protected virtual XmlSerializer CreateSerializer<T>()
+
+        public XmlSerializerService(Encoding encoding = null, XmlWriterSettings writerSettings = null, XmlSerializerNamespaces namespaces = null)
+        {
+            this.serializers = new Dictionary<Type, XmlSerializer>();
+
+            this.defaultEncoding = encoding ?? Encoding.UTF8;
+
+            this.defaultWriterSettings = writerSettings ?? new XmlWriterSettings
+            {
+                OmitXmlDeclaration = true,
+                Indent = true,
+                Encoding = this.defaultEncoding
+            };
+
+            this.defaultNamespaces = namespaces ?? new XmlSerializerNamespaces(new[]
+            {
+                     new XmlQualifiedName("xsd", "http://www.w3.org/2001/XMLSchema"),
+                     new XmlQualifiedName("xsi", "http://www.w3.org/2001/XMLSchema-instance"),
+                     new XmlQualifiedName("", "")
+                 });
+        }
+
+        protected virtual XmlSerializer CreateSerializer<T>()
     {
       return new XmlSerializer(typeof(T));
     }
@@ -34,28 +55,13 @@ namespace Apollo.EyeErp.Shared.Utilities
       return serializer;
     }
 
-    public string SerializeToXmlString<T>(T data)
-    {
-      var settings = new XmlWriterSettings
-      {
-        OmitXmlDeclaration = true,
-        Indent = true,
-        Encoding = new UTF8Encoding(false)
-      };
+        public string SerializeToXmlString<T>(T data)
+        {
+            var serializer = GetOrCreateSerializer<T>();
+            return SerializeObject(data, serializer, defaultEncoding, defaultWriterSettings, defaultNamespaces);
+        }
 
-      using (var stringWriter = new StringWriterWithEncoding(Encoding.UTF8))
-      using (var xmlWriter = XmlWriter.Create(stringWriter, settings))
-      {
-        var ns = new XmlSerializerNamespaces();
-        ns.Add("xsd", "http://www.w3.org/2001/XMLSchema");
-        ns.Add("xsi", "http://www.w3.org/2001/XMLSchema-instance");
-        ns.Add("", "");
-
-        GetOrCreateSerializer<T>().Serialize(xmlWriter, data, ns);
-        return stringWriter.ToString();
-      }
-    }
-    public void SerializeToXmlFile<T>(T data, string filePath)
+        public void SerializeToXmlFile<T>(T data, string filePath)
     {
       string xmlContent = SerializeToXmlString(data);
       File.WriteAllText(filePath, xmlContent, Encoding.UTF8);
