@@ -82,26 +82,29 @@ namespace Apollo.EyeErp.Shared.Utilities
 
     #region Old
 
-    public static string SerializeObject<Object>(Object toSerialize, XmlSerializer serializer, XmlSerializerNamespaces ns = null)
-    {
-      return SerializeObject<Object>(toSerialize, serializer, Encoding.Unicode, ns);
-    }
+    //public static string SerializeObject<Object>(Object toSerialize, XmlSerializer serializer, XmlSerializerNamespaces ns = null)
+    //{
+    //  return SerializeObject<Object>(toSerialize, serializer, Encoding.Unicode, ns);
+    //}
 
-    public static string SerializeObject<Object>(Object toSerialize, XmlSerializer serializer, Encoding enc, XmlSerializerNamespaces ns = null)
-    {
-      using (StringWriterEx textWriter = new StringWriterEx(enc))
-      {
-        if (ns != null)
-          serializer.Serialize(textWriter, toSerialize, ns);
-        else
-          serializer.Serialize(textWriter, toSerialize);
+    //public static string SerializeObject<Object>(Object toSerialize, XmlSerializer serializer, Encoding enc, XmlSerializerNamespaces ns = null)
+    //{
+    //  using (StringWriterEx textWriter = new StringWriterEx(enc))
+    //  {
+    //    if (ns != null)
+    //      serializer.Serialize(textWriter, toSerialize, ns);
+    //    else
+    //      serializer.Serialize(textWriter, toSerialize);
 
-        return textWriter.ToString();
-      }
-    }
+    //    return textWriter.ToString();
+    //  }
+    //}
 
-    public static string SerializeObject<Object>(Object toSerialize, XmlSerializer serializer, Encoding enc, XmlWriterSettings writerSettings = null, XmlSerializerNamespaces ns = null)
+    public static string SerializeObject<Object>(Object toSerialize, XmlSerializer serializer, Encoding enc = null, XmlWriterSettings writerSettings = null, XmlSerializerNamespaces ns = null)
     {
+      if (enc == null)
+        enc = Encoding.Unicode;
+
       using (StringWriterEx textWriter = new StringWriterEx(enc))
       {
         using (XmlWriter xmlWriter = XmlWriter.Create(textWriter, writerSettings))
@@ -123,6 +126,7 @@ namespace Apollo.EyeErp.Shared.Utilities
     /// <param name="toSerialize"></param>
     /// <param name="extraTypes"></param>
     /// <returns></returns>
+    [Obsolete("Apollo.XmlSerializer")]
     public static string SerializeObject<Object>(Object toSerialize, Type[] extraTypes = null)
     {
       XmlSerializer serializer = new XmlSerializer(typeof(Object), extraTypes);
@@ -136,6 +140,7 @@ namespace Apollo.EyeErp.Shared.Utilities
     /// <param name="toSerialize"></param>
     /// <param name="overrides"></param>
     /// <returns></returns>
+    [Obsolete("Apollo.XmlSerializer")]
     public static string SerializeObject<Object>(Object toSerialize, XmlAttributeOverrides overrides)
     {
       XmlSerializer serializer = new XmlSerializer(typeof(Object), overrides);
@@ -150,20 +155,20 @@ namespace Apollo.EyeErp.Shared.Utilities
       }
     }
 
-    public static object DeserializeObject(string xml, XmlSerializer serializer)
-    {
-      using (TextReader reader = new StringReader(xml))
-      {
-        return serializer.Deserialize(reader);
-      }
-    }
-
+    //public static object DeserializeObject(string xml, XmlSerializer serializer)
+    //{
+    //  using (TextReader reader = new StringReader(xml))
+    //  {
+    //    return serializer.Deserialize(reader);
+    //  }
+    //}
+    [Obsolete("Apollo.XmlSerializer")]
     public static Object DeserializeObject<Object>(string xml, Type[] extraTypes = null)
     {
       XmlSerializer serializer = new XmlSerializer(typeof(Object), extraTypes);
       return DeserializeObject<Object>(xml, serializer);
     }
-
+    [Obsolete("Apollo.XmlSerializer")]
     public static Object DeserializeObject<Object>(string xml, XmlAttributeOverrides overrides)
     {
       XmlSerializer serializer = new XmlSerializer(typeof(Object), overrides);
