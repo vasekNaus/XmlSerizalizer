@@ -109,5 +109,11 @@ namespace Apollo.EyeErp.Shared.Model
 
         public bool ProFormaInvoiceIdSpecified { get; set; }
 
-    }
+    #region Nepoužívané - nejsou v databázi
+
+    
+    
+    #endregion
+
+  }
 }

@@ -9,14 +9,14 @@ namespace Apollo.EyeErp.Core;
 
 public partial class Form1 : Form
 {
-    private Shared.Utilities.XmlSerializerHelper2 xmlSerializerHelper2;
+    private Shared.Utilities.XmlSerializerService xmlSerializerHelper2;
 
     public Form1()
     {
         InitializeComponent();
         this.KeyPreview = true;
         this.KeyDown += Form1_KeyDown;
-        xmlSerializerHelper2 = new Shared.Utilities.XmlSerializerHelper2();
+        xmlSerializerHelper2 = new Shared.Utilities.XmlSerializerService();
 
 
     }
@@ -50,8 +50,8 @@ public partial class Form1 : Form
                     }
                     string name = $"{typeName}_{idValue}.xml";
 
-                    var task = xmlSerializerHelper2.DeserializeFromXml<MyTask>(inputText);
-                    xmlSerializerHelper2.SerializeToXml(name, task);
+                    var task = xmlSerializerHelper2.DeserializeFromXmlFile<MyTask>(inputText);
+                    xmlSerializerHelper2.SerializeToXmlFile(task, name);
                     MessageBox.Show("Deserializace proběhla", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
