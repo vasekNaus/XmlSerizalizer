@@ -11,9 +11,19 @@ namespace Apollo.EyeErp.Shared.Model
     [XmlInclude(typeof(TaskEntrance))]
     [XmlInclude(typeof(TaskOperation))]
     [XmlInclude(typeof(TaskInstrument))]
-    [KnownType(typeof(TaskEntrance))]
-    [KnownType(typeof(TaskOperation))]
-    [KnownType(typeof(TaskInstrument))]
+
+    // 
+    // Poznámka:
+    // Pro XmlSerializer je potřeba používat pouze atributy [XmlInclude], 
+    // které určují možné odvozené typy při serializaci a deserializaci.
+    // Atributy [KnownType] jsou určeny pouze pro DataContractSerializer (například ve WCF),
+    // XmlSerializer je ignoruje a nemají na něj žádný vliv.
+    // Pokud tedy používáte pouze XmlSerializer, stačí ponechat pouze [XmlInclude].
+    // [KnownType] použijte pouze v případě, že někde v projektu využíváte DataContractSerializer.
+    //
+    //[KnownType(typeof(TaskEntrance))]
+    //[KnownType(typeof(TaskOperation))]
+    //[KnownType(typeof(TaskInstrument))]
     public class MyTask
     {
         public MyTask() { }
