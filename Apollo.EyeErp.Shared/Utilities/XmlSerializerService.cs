@@ -14,33 +14,33 @@ namespace Apollo.EyeErp.Shared.Utilities
   {
     private Dictionary<Type, XmlSerializer> serializers;
 
-        private readonly Encoding defaultEncoding;
-        private readonly XmlWriterSettings defaultWriterSettings;
-        private readonly XmlSerializerNamespaces defaultNamespaces;
+    private readonly Encoding defaultEncoding;
+    private readonly XmlWriterSettings defaultWriterSettings;
+    private readonly XmlSerializerNamespaces defaultNamespaces;
 
 
-        public XmlSerializerService(Encoding encoding = null, XmlWriterSettings writerSettings = null, XmlSerializerNamespaces namespaces = null)
-        {
-            this.serializers = new Dictionary<Type, XmlSerializer>();
+    public XmlSerializerService(Encoding encoding = null, XmlWriterSettings writerSettings = null, XmlSerializerNamespaces namespaces = null)
+    {
+      this.serializers = new Dictionary<Type, XmlSerializer>();
 
-            this.defaultEncoding = encoding ?? Encoding.UTF8;
+      this.defaultEncoding = encoding ?? Encoding.UTF8;
 
-            this.defaultWriterSettings = writerSettings ?? new XmlWriterSettings
-            {
-                OmitXmlDeclaration = true,
-                Indent = true,
-                Encoding = this.defaultEncoding
-            };
+      this.defaultWriterSettings = writerSettings ?? new XmlWriterSettings
+      {
+        OmitXmlDeclaration = true,
+        Indent = true,
+        Encoding = this.defaultEncoding
+      };
 
-            this.defaultNamespaces = namespaces ?? new XmlSerializerNamespaces(new[]
-            {
-                     new XmlQualifiedName("xsd", "http://www.w3.org/2001/XMLSchema"),
-                     new XmlQualifiedName("xsi", "http://www.w3.org/2001/XMLSchema-instance"),
-                     new XmlQualifiedName("", "")
-                 });
-        }
+      this.defaultNamespaces = namespaces ?? new XmlSerializerNamespaces(new[]
+      {
+        new XmlQualifiedName("xsd", "http://www.w3.org/2001/XMLSchema"),
+        new XmlQualifiedName("xsi", "http://www.w3.org/2001/XMLSchema-instance"),
+        new XmlQualifiedName("", "")
+      });
+    }
 
-        protected virtual XmlSerializer CreateSerializer<T>()
+    protected virtual XmlSerializer CreateSerializer<T>()
     {
       return new XmlSerializer(typeof(T));
     }
@@ -55,13 +55,13 @@ namespace Apollo.EyeErp.Shared.Utilities
       return serializer;
     }
 
-        public string SerializeToXmlString<T>(T data)
-        {
-            var serializer = GetOrCreateSerializer<T>();
-            return SerializeObject(data, serializer, defaultEncoding, defaultWriterSettings, defaultNamespaces);
-        }
+    public string SerializeToXmlString<T>(T data)
+    {
+      var serializer = GetOrCreateSerializer<T>();
+      return Serialize(data, serializer, defaultEncoding, defaultWriterSettings, defaultNamespaces);
+    }
 
-        public void SerializeToXmlFile<T>(T data, string filePath)
+    public void SerializeToXmlFile<T>(T data, string filePath)
     {
       string xmlContent = SerializeToXmlString(data);
       File.WriteAllText(filePath, xmlContent, Encoding.UTF8);
@@ -106,10 +106,10 @@ namespace Apollo.EyeErp.Shared.Utilities
     //  }
     //}
 
-    public static string SerializeObject<Object>(Object toSerialize, XmlSerializer serializer, Encoding enc = null, XmlWriterSettings writerSettings = null, XmlSerializerNamespaces ns = null)
+    public static string Serialize<T>(T toSerialize, XmlSerializer serializer, Encoding enc = null, XmlWriterSettings writerSettings = null, XmlSerializerNamespaces ns = null)
     {
       if (enc == null)
-        enc = Encoding.Unicode;
+        enc = Encoding.UTF8;
 
       using (StringWriterEx textWriter = new StringWriterEx(enc))
       {
@@ -136,7 +136,7 @@ namespace Apollo.EyeErp.Shared.Utilities
     public static string SerializeObject<Object>(Object toSerialize, Type[] extraTypes = null)
     {
       XmlSerializer serializer = new XmlSerializer(typeof(Object), extraTypes);
-      return SerializeObject<Object>(toSerialize, serializer);
+      return Serialize<Object>(toSerialize, serializer);
     }
 
     /// <summary>
@@ -150,14 +150,14 @@ namespace Apollo.EyeErp.Shared.Utilities
     public static string SerializeObject<Object>(Object toSerialize, XmlAttributeOverrides overrides)
     {
       XmlSerializer serializer = new XmlSerializer(typeof(Object), overrides);
-      return SerializeObject<Object>(toSerialize, serializer);
+      return Serialize<Object>(toSerialize, serializer);
     }
 
-    public static Object DeserializeObject<Object>(string xml, XmlSerializer serializer)
+    public static T Deserialize<T>(string xml, XmlSerializer serializer)
     {
       using (TextReader reader = new StringReader(xml))
       {
-        return (Object)serializer.Deserialize(reader);
+        return (T)serializer.Deserialize(reader);
       }
     }
 
@@ -172,13 +172,13 @@ namespace Apollo.EyeErp.Shared.Utilities
     public static Object DeserializeObject<Object>(string xml, Type[] extraTypes = null)
     {
       XmlSerializer serializer = new XmlSerializer(typeof(Object), extraTypes);
-      return DeserializeObject<Object>(xml, serializer);
+      return Deserialize<Object>(xml, serializer);
     }
     [Obsolete("Apollo.XmlSerializer")]
     public static Object DeserializeObject<Object>(string xml, XmlAttributeOverrides overrides)
     {
       XmlSerializer serializer = new XmlSerializer(typeof(Object), overrides);
-      return DeserializeObject<Object>(xml, serializer);
+      return Deserialize<Object>(xml, serializer);
     }
 
     #endregion
