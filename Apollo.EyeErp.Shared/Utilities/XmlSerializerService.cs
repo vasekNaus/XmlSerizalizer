@@ -14,31 +14,24 @@ namespace Apollo.EyeErp.Shared.Utilities
   {
     private Dictionary<Type, XmlSerializer> serializers;
 
-    private readonly Encoding defaultEncoding;
+   
     private readonly XmlWriterSettings defaultWriterSettings;
-    private readonly XmlSerializerNamespaces defaultNamespaces;
+   
 
 
-    public XmlSerializerService(Encoding encoding = null, XmlWriterSettings writerSettings = null, XmlSerializerNamespaces namespaces = null)
-    {
-      this.serializers = new Dictionary<Type, XmlSerializer>();
+        public XmlSerializerService(Encoding encoding = null, XmlWriterSettings writerSettings = null, XmlSerializerNamespaces namespaces = null)
+        {
+            this.serializers = new Dictionary<Type, XmlSerializer>();
 
-      this.defaultEncoding = encoding ?? Encoding.UTF8;
 
-      this.defaultWriterSettings = writerSettings ?? new XmlWriterSettings
-      {
-        OmitXmlDeclaration = true,
-        Indent = true,
-        Encoding = this.defaultEncoding
-      };
+            this.defaultWriterSettings = writerSettings ?? new XmlWriterSettings
+            {
+                OmitXmlDeclaration = true,
+                Indent = true,
+              
+            };
 
-      this.defaultNamespaces = namespaces ?? new XmlSerializerNamespaces(new[]
-      {
-        new XmlQualifiedName("xsd", "http://www.w3.org/2001/XMLSchema"),
-        new XmlQualifiedName("xsi", "http://www.w3.org/2001/XMLSchema-instance"),
-        new XmlQualifiedName("", "")
-      });
-    }
+        }
 
     protected virtual XmlSerializer CreateSerializer<T>()
     {
@@ -58,7 +51,7 @@ namespace Apollo.EyeErp.Shared.Utilities
     public string SerializeToXmlString<T>(T data)
     {
       var serializer = GetOrCreateSerializer<T>();
-      return Serialize(data, serializer, defaultEncoding, defaultWriterSettings, defaultNamespaces);
+      return Serialize(data, serializer,null, defaultWriterSettings);
     }
 
     public void SerializeToXmlFile<T>(T data, string filePath)
